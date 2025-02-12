@@ -178,12 +178,16 @@ def state_6():
         app_qs = st.session_state.app_qas
         op = st.session_state.active_op
         main = st.empty()
+        ai_app = None
         with main.container():
             with st.spinner('Generating your application...'):
                 ai_app = gen_app(app_qs, screening_qs, op)
                 if ai_app and len(ai_app):
                     st.session_state.app = ai_app
-            state_7()
+            st.empty()
+            st.heading(f"Your Application for Funding Opportunity {op_name}")
+            st.markdown(ai_app)
+            st.divider()
     else:
         st.session_state.state = 5
 
