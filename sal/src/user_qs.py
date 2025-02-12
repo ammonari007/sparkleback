@@ -153,7 +153,7 @@ def get_matches(user_questions):
     qa_context = ("#### Music Artist questions and answers ####\n\n" +
                   user_questions_context(user_questions))
     ops_context = build_opportunity_context(get_ops_list())
-    user_prompt = f"The music artist has answered your questions in the context below, and the context below also contains a table of all of the opportunities available. As per the instructions please match the questions and answers they gave to 1 or more opportunities that they meet the eligibility requirements for. If their answers are such that none of the opportunities are eligible, return an empty list of opportunities. \n\n\n### Context ###\n\n#### Questions and answers ####\n{qa_context}\n\n#### Opportunities ####\n\n{ops_context}"
+    user_prompt = f"The music artist has answered your questions in the context below to help you find opportunities that best fit with them and their project initiatives they want funding for. Below is also a list of all of the available funding opportunities. As per the instructions please find the best 2-3 opportunities that match the 'music artist' and their project initiative based on the answers provided. You must be 100% accurate. \n\n\n### Context ###\n\n#### Questions and answers ####\n{qa_context}\n\n#### Opportunities ####\n\n{ops_context}"
     print("Getting response")
     new_data = get_response_schema(
         select_opportunities_prompt, user_prompt, OpportunityMatches)
