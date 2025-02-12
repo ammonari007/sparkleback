@@ -3,14 +3,14 @@ import json
 
 def get_survey_qs():
     survey_qas = None
-    with open("salford/ui_data/q_n_a.json") as f:
+    with open("sal/ui_data/q_n_a.json") as f:
         survey_qas = json.loads(json.load(f))
     return survey_qas
 
 
 def get_all_app_qs():
     qs = None
-    with open("salford/ui_data/app_question.json") as f:
+    with open("sal/ui_data/app_question.json") as f:
         qs = json.loads(json.load(f))
     return qs
 

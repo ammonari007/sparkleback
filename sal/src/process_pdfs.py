@@ -6,7 +6,7 @@ from pdf_extractor.parse_pdf import parse
 from core.openai_ import get_response_schema
 
 
-def list_files(base_path="salford/raw_data/", ext="pdf"):
+def list_files(base_path="sal/raw_data/", ext="pdf"):
     pdf_range = range(1, 11)
     paths = []
     for i in pdf_range:
@@ -95,7 +95,7 @@ def process_raw_data():
 
 
 def get_ops_list():
-    files = list_files("salford/etl_data/", "json")
+    files = list_files("sal/etl_data/", "json")
     ops = []
     for fs in files:
         with open(fs) as f:
@@ -212,7 +212,7 @@ def get_questions():
     new_data = get_response_schema(
         screening_qs_prompt, user_prompt, Questions)
     if len(new_data):
-        with open("salford/ui_data/q_n_a.json", "w") as f:
+        with open("sal/ui_data/q_n_a.json", "w") as f:
             f.write(json.dumps(new_data, ensure_ascii=True))
 
 
@@ -230,7 +230,7 @@ def create_op_context(op):
 def get_all_qa_context():
     qa_raw = None
     context = ""
-    with open("salford/ui_data/q_n_a.json") as f:
+    with open("sal/ui_data/q_n_a.json") as f:
         qa_raw = json.loads(json.load(f))
     qas = qa_raw["music_artist"] + qa_raw["project"]
     for qa in qas:
