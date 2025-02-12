@@ -119,8 +119,7 @@ def get_ops_list():
                         if len(matches):
                             clean_op["name"] = name + "_" + len(matches) + 1
                         ops.append(clean_op)
-                    else:
-                        ops.append(clean_op)
+
     return ops
 
 
