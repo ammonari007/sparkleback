@@ -7,7 +7,7 @@ import json
 
 
 def state_1():
-    if all(not i in st.session_state for i in ["submitted_screening_qs", "matches_shown", "selected_op_app", "submitted_app_qs", "app_shown"]):
+    if not st.session_state and not len(list(st.session_state.keys())):
         st.session_state.submitted_screening_qs = False
         st.session_state.screening_qas = []
         st.session_state.all_screening_qs = get_survey_qs()
@@ -106,9 +106,8 @@ def matches():
                 with col1:
                     st.markdown("**Interested in applying?**")
                 with col2:
-                    clicked = st.button("Write Application with AI")
-                    if clicked:
-                        state_4(idx)
+                    st.button(
+                        "Write Application with AI", key=f"curr_op_{idx}", on_click=state_4)
             st.divider()
         if not matched:
             col1, col2 = st.columns([0.5, 0.5])
@@ -129,10 +128,12 @@ def state_3():
         st.session_state.state = 1
 
 
-def state_4(idx=None):
+def state_4():
     if st.session_state.matches:
         st.session_state.state = 4
         st.session_state.selected_op_app = True
+        op_idx = [k for k in st.session_state.keys() if "curr_op_" in k]
+        idx = int(op_idx[0].replace("curr_op_", ""))
         st.session_state.active_op = st.session_state.matched_ops[idx]
         app_qs, app_reqs = get_app_qs(st.session_state.active_op["Name"])
         if len(app_qs):
@@ -148,13 +149,15 @@ def app_qs_form():
     main = st.empty()
     with main.container():
         page_title()
-        with st.form("app_qs"):
+        st.header(
+            "Fill in the following questions so our AI can write you an application.")
+        with st.form("fill_app_qs"):
             questions = st.session_state.app_qs
             st.session_state["app_qas"] = []
             for q in questions:
                 txt = st.text_area(q, "")
-                st.session_state["app_answers"].append(
-                    {"question": question, "answer": txt})
+                st.session_state["app_qas"].append(
+                    {"question": q, "answer": txt})
             st.form_submit_button("Submit", on_click=state_6)
 
 
@@ -175,7 +178,6 @@ def state_6():
         app_qs = st.session_state.app_qas
         op = st.session_state.active_op
         main = st.empty()
-        page_title()
         with main.container():
             with st.spinner('Generating your application...'):
                 ai_app = gen_app(app_qs, screening_qs, op)
@@ -189,9 +191,8 @@ def state_6():
 def build_app_page():
     main = st.empty()
     with main.container():
-        page_title()
         op_name = st.session_state.active_op["Name"]
-        st.heading(f"Your Application for {op_name}")
+        st.heading(f"Your Application for Funding Opportunity {op_name}")
         st.markdown(st.session_state.app)
         st.divider()
 

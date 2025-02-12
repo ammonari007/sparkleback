@@ -10,7 +10,7 @@ def get_survey_qs():
 
 def get_all_app_qs():
     qs = None
-    with open("sal/ui_data/app_question.json") as f:
+    with open("sal/ui_data/app_questions.json") as f:
         qs = json.loads(json.load(f))
     return qs
 
@@ -67,7 +67,7 @@ def word_matched_op_name(app_qs, op_name):
 
 def get_app_qs(op_name):
     qs, app_reqs = None, None
-    app_qs = get_all_app_qs()
+    app_qs = get_all_app_qs()["application_qs"]
     qs, app_reqs = easy_matched_op_name(app_qs, op_name)
     if not qs:
         qs, app_reqs = contained_matched_op_name(app_qs, op_name)
