@@ -126,9 +126,10 @@ def matches():
                             st.markdown(f"**{k}**")
                         with col2:
                             st.text(f"{v}")
-                st.markdown(
-                    "**Why I thought this was the best opportunity for you, and the one you have the best chance of getting:**")
-                st.text(op["Reasoning"])
+                if "Reasoning" in op:
+                    st.markdown(
+                        "**Why I thought this was the best opportunity for you, and the one you have the best chance of getting:**")
+                    st.text(op["Reasoning"])
             if matched:
                 col1, col2 = st.columns([0.5, 0.5])
                 with col1:
