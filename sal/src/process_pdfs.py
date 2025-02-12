@@ -117,21 +117,8 @@ def get_ops_list():
                         matches = [ops.index(o)
                                    for o in ops if "name" in o and (name in o["name"] or o["name"] in name)]
                         if len(matches):
-                            op = ops[matches[0]]
-                            combined = {}
-                            for k, v in op.items():
-                                if k in clean_op:
-                                    combined[k] = v + clean_op[k]
-                                else:
-                                    combined[k] = v
-                            left = [k for k in clean_op.keys()
-                                    if not k in combined]
-                            if len(left):
-                                for l in left:
-                                    combined[l] = clean_op[l]
-                            ops[matches[0]] = combined
-                        else:
-                            ops.append(clean_op)
+                            clean_op["name"] = name + "_" + len(matches) + 1
+                        ops.append(clean_op)
                     else:
                         ops.append(clean_op)
     return ops
