@@ -162,11 +162,12 @@ The new season of funding has come in, and you have found the list of funding op
 
 ### Instructions ###
 1. What you need to do is examine all of the funding opportunities that are given to you in the context, and come up with two groups of questions with a predefined set of answers: 1) questions about the music artist; 2) questions about the project/initiative they want to get funded.
-2. Each question must be concise, easy for the music artist to understand by being free of technical or financial jargon, and the predefined answers they must choose from should have wide coverage.
-3. You must choose these questions and possible answers in such a way that all of the responses you acquire are sufficient information for you to select the grant that suits them best - so you must be really specific with your questions.
-4. There is no limit on the number of answers you come up with that they must select from.
-5. Output your response as a JSON object in the following format:
-{ music_artist: [{ question, answers: [<list of answers as list of text strings>]}, <each question you come up with as a list of questions structured as per the example>], project: [{ question, answers: [<list of answers as list of text strings>]}, <each question you come up with as a list of questions structured as per the example>] }
+2. Each question must be concise, easy for the music artist to understand by being free of technical or financial jargon, and the predefined answers they must choose from should have wide coverage - i.e. they should be relevant to every 'music artist'.
+3. You must choose these questions and possible answers in such a way that all of the responses you acquire are sufficient information for you to select at least 2 grant opportunities that suit them best.
+4. There is no limit on the number of answers you come up with that they must select from. You should have enough that you have a wide coverage and there is a specific enough answer for every type of 'music artist', without it being a "yes" or "no" type of question.
+5. Make sure your questions and answers are professional and do not discriminate or exclude certain 'music artists' from applying. They should have in-depth questions about the project they are doing and themselves that anyone should be able to answer, but specific enough that you will be able to use this information to narrow down which 2-3 opportunities suit them best. You should only have utf-8 characters in your answers.
+6. Output your response as a JSON object in the following format:
+{ music_artist: [{ question, answers: [<list of answers as list of text strings>]}, <all questions / predefined answers you come up with structured as per the first object in this list>], project: [{ question, answers: [<list of answers as list of text strings>]}, <all questions / predefined answers you come up with structured as per the first object in this list>] }
 """
 
 get_app_qs_prompt = """
@@ -208,7 +209,7 @@ def build_opportunity_context(ops):
 def get_questions():
     ops = get_ops_list()
     context = build_opportunity_context(ops)
-    user_prompt = f"The list of opportunities is in the table in the context below. Produce two lists of questions as per the instructions you were given, one about the music artist and the other about their initiative / project they want funded, where each question has a predefined set of answers and the answers and questions are specific enough that if the music artist were to choose any combination of answers you would ascertain which of the opportunities in the table below were relevant. \n\n### Context ###\nOpportunities\n\n{context}"
+    user_prompt = f"The list of opportunities is in the table in the context below. Produce two lists of questions as per the instructions you were given, one about the music artist and the other about their initiative / project they want funded, where each question has a predefined set of answers that would be applicable to any 'music artist' regardless of their gender, ethnicity, experience etc - your answers and your questions should be broad enough that it would cover everything. You must select questions and a list of predefined answers such that you almost always come up with at least 1 opportunity they are eligible for - ideally a set of answers would result in 2-3 opportunities per person. Your questions and answers must be professiona. \n\n### Context ###\nOpportunities\n\n{context}"
     new_data = get_response_schema(
         screening_qs_prompt, user_prompt, Questions)
     if len(new_data):

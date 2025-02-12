@@ -55,6 +55,8 @@ By your own definition, you should have all of the information you need to write
 select_opportunities_prompt = base_prompt + """
 You have asked the 'music artist' some screening questions in order to identify what opportunities if any at all would be appropriate for them to apply to. The questions and answers are given in the context of the question, along with a table that explains all of the opportunities. Given their answers to your questions, you must select the opportunities from the table below that they 100% pass all of the requirements for, and do not breach any of the restrictions. You must be 100% accurate.
 
+If you did not find them opportunities:
+
 ### Instructions if you don't find any opportunities ###
 **If you don't think any opportunities are relevant based on their answers*:
 If you don't find any opportunities for them based on their answers, then you should skip the instructions below and just follow these ones.
@@ -70,13 +72,15 @@ If you don't find any opportunities for them based on their answers, then you sh
 3.7. funding_amount: the range of funding one individual project can get - the minimum and maximum in GBP.
 
 4. Output your response as a JSON object formatted below:
-{ "opportunities": [], "missed_ops": [{ name: <name of opportunity from 3.1>, organization: <your sentence from 3.2>, description: <your sentences as a chunk of text from point 3.3>, eligibility: <text representing your response in 3.4>, application_requirements: <text representing your response in 3.5>, application_process: <text representing your response in 3.6>, funding_amount: <a string with £ at the front of each number, and the numbers together as £min-£max represented as a range as a string as per what you produced for the minimum funding range in 3.7>, "reasoning": <a string of the paragraph you constructed in step 2 for the missed opportunity explanation and what they would have to do differently to be eligible> }, <and another object for the second opportunity you wrote about in step 2] }
+{ "opportunities": [], "missed_ops": [{ name: <name of opportunity from 3.1>, organization: <your sentence from 3.2>, description: <your sentences as a chunk of text from point 3.3>, eligibility: <text representing your response in 3.4>, application_requirements: <text representing your response in 3.5>, application_process: <text representing your response in 3.6>, funding_amount: <a string with £ at the front of each number, and the numbers together as £min-£max represented as a range as a string as per what you produced for the minimum funding range in 3.7>, "reasoning": <a string of the paragraph you constructed in step 2 for the missed opportunity explanation and what they would have to do differently to be eligible> }, <and another object for the second opportunity you wrote about in step 2>] }
 
+If you did find them opportunities:
 ### Instructions if you do find any opportunities ###
 1. For each opportunity you deem relevant, you write 3 concise sentences solely based on the information in the context, that explain the following:
-1.1. Sentence 1 - "match_reasoning": Explain, by referencing answers to their questions and the eligibility criteria of the funding opportunity, why exactly they match that opportunity - and why you think it is a good opportunity for them.
+1.1. Sentence 1 - "reasoning": Explain, by referencing answers to their questions and the eligibility criteria of the funding opportunity, why exactly they match that opportunity - and why you think it is a good opportunity for them.
 1.2. Sentence 2 - "pros": Explain the benefits and positives of the opportunity very concisely by only using data that is present in the table below. It must be about that particular opportunity only, do not accidentally pull data from a different opportunity. Feel free to reference the grant size, the ease of application, the waiting time of the result, reason(s) unique to them of why they might be most likely to get this opportunity vs. others based on some info about the opportunity - and that it won't be that competitive therefore, or any other benefits in terms of reputation, other opportunities, marketing / promotional value, new clients, partners, networking, or any other benefit from the opportunity information.
 1.2. Sentence 3 - "cons": Explain any risks you foresee that might impede them from getting the application, e.g. maybe some of their answers weren't exactly right or maybe there is still some information you need from them that is unclear about their project, any restrictions or biases the organization might have for that funding opportunity that could go against them based on the answers they provided or if they meet any other criteria you don't know about, the money received and if there are contingencies or if it takes long, the decision time and if thats long, the application requirements and if they have a lot of documents or complex things they need to provide which could take time, or anything else you can think of that would form a reason as to why they shouldn't choose that opportunity.
+    All of these parts - "pros", "cons" and "reasoning" - must be filled out. They are crucial.
 2. Also, create a piece of data that describes the opportunity by populating the fields below using just the table entry of the opportunity you were given:
 2.1. name: the name of the opportunity
 2.2. organization: the organization name and a very brief description (one concise sentence) about them and their interests.
@@ -99,7 +103,7 @@ class OpportunityMatch(BaseModel):
     application_requirements: str
     application_process: str
     funding_amount: str
-    match_reasoning: str
+    reasoning: str
     cons: str
     pros: str
 

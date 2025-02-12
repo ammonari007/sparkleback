@@ -6,6 +6,32 @@ import time
 import json
 
 
+def clear():
+    st.session_state.submitted_screening_qs = False
+    st.session_state.screening_qas = []
+    st.session_state.all_screening_qs = get_survey_qs()
+
+    st.session_state.matches_shown = False
+    st.session_state.matches = None
+    st.session_state.matched_ops = []
+
+    st.session_state.selected_op_app = False
+    st.session_state.active_op = None
+
+    st.session_state.app_qs_shown = False
+    st.session_state.app_qs = []
+    st.session_state.app_reqs = []
+
+    st.session_state.submitted_app_qs = False
+    st.session_state.app_qas = []
+
+    st.session_state.app_shown = False
+    st.session_state.app = None
+
+    st.session_state.state = 1
+    state_1()
+
+
 def state_1():
     if not st.session_state and not len(list(st.session_state.keys())):
         st.session_state.submitted_screening_qs = False
@@ -95,12 +121,14 @@ def matches():
                 st.subheader(op["Name"])
                 for k, v in op.items():
                     col1, col2 = st.columns([0.25, 0.75])
-                    if not k == "Name":
+                    if not k in ["Name", "Reasoning"]:
                         with col1:
                             st.markdown(f"**{k}**")
                         with col2:
                             st.text(f"{v}")
-                st.text(op["Match Reasoning"])
+                st.markdown(
+                    "**Why I thought this was the best opportunity for you, and the one you have the best chance of getting:**")
+                st.text(op["Reasoning"])
             if matched:
                 col1, col2 = st.columns([0.5, 0.5])
                 with col1:
@@ -177,17 +205,23 @@ def state_6():
         screening_qs = st.session_state.screening_qas
         app_qs = st.session_state.app_qas
         op = st.session_state.active_op
+        op_name = op["Name"]
         main = st.empty()
         ai_app = None
         with main.container():
             with st.spinner('Generating your application...'):
                 ai_app = gen_app(app_qs, screening_qs, op)
                 if ai_app and len(ai_app):
-                    st.session_state.app = ai_app
-            st.empty()
-            st.heading(f"Your Application for Funding Opportunity {op_name}")
-            st.markdown(ai_app)
+                    st.session_state.app = ai_app['application']
+            st.header(f"Your Application for Funding Opportunity {op_name}")
+            st.markdown(ai_app['application'])
             st.divider()
+            col1, col2 = st.columns([0.7, 0.3])
+            with col1:
+                st.markdown(
+                    "**Want to start over and refine your answers to get another opportunity match & answer?*")
+            with col2:
+                st.button("Start again", on_click=clear)
     else:
         st.session_state.state = 5
 
@@ -222,4 +256,3 @@ def build_ops_section_headings(matched, ops):
 
 
 state_1()
-st.divider()
