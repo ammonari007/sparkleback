@@ -297,6 +297,3 @@ def gen_application_qs():
         new_data["opportunity_name"] = op["name"] if "name" in op else "Unknown"
         app_details.append(new_data)
     return app_details
-
-
-process()
