@@ -236,7 +236,7 @@ def build_opportunity_context(ops):
             op['organization'], list) else op['organization']
         op_ctx += f"Opportunity {count}: {name}\nBy organization(s) {org}\n"
         for k, v in op.items():
-            if not k in ["name", "organization"]:
+            if not k.lower() in ["name", "organization"]:
                 clean_k = k.replace("_", " ").title()
                 val = ", ".join(op[k]) if isinstance(
                     op[k], list) else op[k]
