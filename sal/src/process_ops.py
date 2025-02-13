@@ -72,6 +72,3 @@ def update_ops():
                            "path": f"sal/src/{path_idx}{opp_idx}.txt"})
     with open("sal/etl_data/all_ops.json", "w") as f:
         f.write(json.dumps({"ops": all_ops}))
-
-
-update_ops()
