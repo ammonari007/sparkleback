@@ -6,7 +6,7 @@ from pdf_extractor.parse_pdf import parse
 from core.openai_ import get_response_schema
 
 
-def list_files(base_path="sal/raw_data/", ext="pdf"):
+def list_files(base_path="sal/src/", ext="json"):
     pdf_range = range(1, 13)
     paths = []
     for i in pdf_range:
