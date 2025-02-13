@@ -50,11 +50,11 @@ The new season of funding has come in, and you have a ton of unstructured data a
 
 class Opportunity(BaseModel):
     name: str
-    organization: list[str]
-    details: list[str]
-    eligibility: list[str]
-    application_requirements: list[str]
-    other: list[str]
+    organization: str
+    details: str
+    eligibility: str
+    application_requirements: str
+    other: str
 
 
 class ExtractFunding(BaseModel):
