@@ -1,0 +1,115 @@
+{
+  "ops": [
+    {
+      "name": "PPL Momentum Music Fund",
+      "org": ["PRS Foundation"],
+      "path": "sal/src/00.txt"
+    },
+    {
+      "name": "Women Make Music",
+      "org": ["PRS Foundation"],
+      "path": "sal/src/01.txt"
+    },
+    {
+      "name": "International Showcase Fund",
+      "org": ["PRS Foundation"],
+      "path": "sal/src/02.txt"
+    },
+    {
+      "name": "Arts Council National Lottery Project Grants",
+      "org": ["Arts Council England"],
+      "path": "sal/src/03.txt"
+    },
+    {
+      "name": "Developing Your Creative Practice (DYCP)",
+      "org": ["Arts Council England"],
+      "path": "sal/src/04.txt"
+    },
+    {
+      "name": "Arts Council National Lottery Project Grants: Music Projects",
+      "org": ["Arts Council England"],
+      "path": "sal/src/10.txt"
+    },
+    {
+      "name": "Supporting Grassroots Live Music",
+      "org": ["Arts Council England"],
+      "path": "sal/src/11.txt"
+    },
+    {
+      "name": "PRS Foundation International Showcase Fund",
+      "org": ["PRS Foundation"],
+      "path": "sal/src/12.txt"
+    },
+    {
+      "name": "Developing Your Creative Practice",
+      "org": ["Arts Council England"],
+      "path": "sal/src/20.txt"
+    },
+    {
+      "name": "GMCA Culture Fund: Inspire 2024-2026",
+      "org": ["GMCA", "Salford CVS", "10GM"],
+      "path": "sal/src/30.txt"
+    },
+    {
+      "name": "MMF Accelerator Programme",
+      "org": [
+        "Music Managers Forum (MMF)",
+        "YouTube Music",
+        "Arts Council England",
+        "Creative Scotland",
+        "Creative Wales"
+      ],
+      "path": "sal/src/40.txt"
+    },
+    {
+      "name": "PPL Momentum Music Fund",
+      "org": [
+        "PRS Foundation",
+        "PPL",
+        "Creative Wales",
+        "Arts Council of Northern Ireland"
+      ],
+      "path": "sal/src/50.txt"
+    },
+    {
+      "name": "PPL Momentum Accelerator Program",
+      "org": ["PRS Foundation"],
+      "path": "sal/src/51.txt"
+    },
+    {
+      "name": "National Lottery Open Fund for Organisations",
+      "org": ["Creative Scotland"],
+      "path": "sal/src/60.txt"
+    },
+    {
+      "name": "PPL Momentum Music Fund",
+      "org": ["PRS Foundation", "Arts Council England", "PPL"],
+      "path": "sal/src/70.txt"
+    },
+    {
+      "name": "PPL Momentum Accelerator",
+      "org": ["PRS Foundation", "Arts Council England", "PPL"],
+      "path": "sal/src/71.txt"
+    },
+    {
+      "name": "Youth Music NextGen Fund",
+      "org": ["The National Foundation for Youth Music"],
+      "path": "sal/src/80.txt"
+    },
+    {
+      "name": "PPL Momentum Music Fund",
+      "org": [
+        "PRS Foundation",
+        "PPL",
+        "Creative Wales",
+        "Arts Council Northern Ireland"
+      ],
+      "path": "sal/src/90.txt"
+    },
+    {
+      "name": "Early Career Promoter Fund",
+      "org": ["PRS Foundation", "Arts Council England"],
+      "path": "sal/src/100.txt"
+    }
+  ]
+}

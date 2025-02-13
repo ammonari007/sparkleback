@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import re
-from clean_text import join_sentences
+from utils.clean_text import join_sentences
 
 
 def html_to_text(html_str):

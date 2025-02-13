@@ -7,13 +7,11 @@ from core.openai_ import get_response_schema
 
 
 def list_files(base_path="sal/raw_data/", ext="pdf"):
-    pdf_range = range(1, 11)
+    pdf_range = range(1, 13)
     paths = []
     for i in pdf_range:
         if i != 3:
             paths.append(f"{base_path}{i}.{ext}")
-            if i < 7:
-                paths.append(f"{base_path}dv{i}.{ext}")
     return paths
 
 
@@ -37,33 +35,57 @@ The new season of funding has come in, and you have a ton of unstructured data a
 5. Below are the following categories of information you must separate bullet points into for each of the opportunities.
         - "opportunities": for each opportunity you identify, create a list of opportunities each with the follwoing information:
             "opportunity":
-            - Category 1.0: "name": The title or name of the funding opportunity. If you don't know the name, that is fine, just put unknown.
-            - Category 1.1: "organization": All information relating to the organization and its mission, activities, success stories, projects, personnel, funding availability, what they care about, restrictions, biases, goals, commercial offerings, customers, previous funding, backers, story, values, news, etc.
-                - Category 1.2: "details": All information about the funding opportunity available. Everything about the opportunity - this might include its goal, any details or facts related to its purpose, who is behind it, what the requirements are, how much money in total they are offering, how much money they offer to a single applicant, the kinds of projects they are looking to fund and the restrictions / requirements / criteria for what that must consist of, the kinds of music artists and specificty thereof they are willing to fund, timelines, timeline of project, type of funding and mapping of funding to type of opportunity, application requirements or restrictions and deadlines, the application process and any interviews / information / etc required along the way, the timelines for decision application deadline / submission time / when they revert / what they might request when they revert / what other steps in the process they are / when a decision will be made, and any information about what influences that decision ie criteria, what they value the most, etc. Then, any restrictions on the funding itself and what the funding can be used for - what types of projects, what aspects of projects, what activities or initiatives, any restrictions regarding geography or affiliates or products / services they use etc.
-                - Category 1.3: "person_eligibility": All information related to restrictions and requirements on who can apply as a "music artist" - a genre they might be associated with, their level of success, their experience, what their job title / experience / roles must be or have been in the past or have never been, any requirements related to their age, gender, ethnicity, location or other demographic/individual information, restrictions regarding any other funding they've received in the past, people or companies they've worked with, their partners and affiliates, their brand or marketing message, etc.
-                - Category 1.4: "project_eligibility": :All information related to the restrictions and requirements for each of the projects or initiatives they can apply for for that opportunity- this might include, for each project type, the start and end date of the initiative, the total cost, any descriptions of what the initiative might or must be, the categories or criteria of eligibility of an initiative whether its in terms of budget, activities, time period, partners, geography, what they can use the money to pay for, whether they need to match money or if its an open grant, if its a loan or some other funding mechanism, if there are any people that must be involved, any skills they might need to have, etc.
-                - Category 1.5: "application_requirements": All information related to the application criteria and contents: specific documents they must produce above and beyond the application, what information they need to provide in the application / questions they need to answer, any testimonials or third party information they must provide about the project or themselves, any financial information requirements about themselves or their projects, their history / previous experience / current role / partners / online resources / actual music / testimonials / etc required for the application, criteria used to assess eligibility and therefore what information might be required to include, less tangible comments or opinions about what helps and what doesn't help, what they prefer in the application, etc.
-                - Category 1.6: "other": Any other information that directly relates to the organization, the opportunity available, the application and application process, eligibility, the projects they want to fund, the organization behind it, and any success stories / example applications / testimonials about the funding or organization, opinions about the opportunity of others, any nice to haves or things to include as part of the application, any projects they particularly favour, etc.
-        "other": Independently, any information provided that does not directly fit into relate to or describe anything about an opportunity, or any information you are unsure about.
-5. Remember you must never, under any circumstances, exclude information you find. Every piece of information in the context the user provides you with should be categorized and present in the output.
+            - Category 1.0: "name": The unique title or name of the funding opportunity. Not the master fund, the specific actual funding opportunity. All of these should be unique.
+            - Category 1.1: "organization": The name of the organization behind the funding opportunity.
+            - Category 1.2: "details": All information relating to the organization and its mission, activities, success stories, projects, personnel, funding availability, what they care about, restrictions, biases, goals, commercial offerings, customers, previous funding, backers, story, values, news, etc. All information about the funding opportunity available. Everything about the opportunity - this might include its goal, any details or facts related to its purpose, who is behind it, what the requirements are, how much money in total they are offering, how much money they offer to a single applicant, the kinds of projects they are looking to fund and the restrictions / requirements / criteria for what that must consist of, the kinds of music artists and specificty thereof they are willing to fund, timelines, timeline of project, type of funding and mapping of funding to type of opportunity, application requirements or restrictions and deadlines, the application process and any interviews / information / etc required along the way, the timelines for decision application deadline / submission time / when they revert / what they might request when they revert / what other steps in the process they are / when a decision will be made, and any information about what influences that decision ie criteria, what they value the most, etc. Then, any restrictions on the funding itself and what the funding can be used for - what types of projects, what aspects of projects, what activities or initiatives, any restrictions regarding geography or affiliates or products / services they use etc.
+            - Category 1.3: "eligibility": All information related to restrictions and requirements on who can apply as a "music artist" - a genre they might be associated with, their level of success, their experience, what their job title / experience / roles must be or have been in the past or have never been, any requirements related to their age, gender, ethnicity, location or other demographic/individual information, restrictions regarding any other funding they've received in the past, people or companies they've worked with, their partners and affiliates, their brand or marketing message, etc.:All information related to the restrictions and requirements for each of the projects or initiatives they can apply for for that opportunity- this might include, for each project type, the start and end date of the initiative, the total cost, any descriptions of what the initiative might or must be, the categories or criteria of eligibility of an initiative whether its in terms of budget, activities, time period, partners, geography, what they can use the money to pay for, whether they need to match money or if its an open grant, if its a loan or some other funding mechanism, if there are any people that must be involved, any skills they might need to have, etc.
+            - Category 1.4: "application_requirements": All information related to the application criteria and contents: specific documents they must produce above and beyond the application, what information they need to provide in the application / questions they need to answer, any testimonials or third party information they must provide about the project or themselves, any financial information requirements about themselves or their projects, their history / previous experience / current role / partners / online resources / actual music / testimonials / etc required for the application, criteria used to assess eligibility and therefore what information might be required to include, less tangible comments or opinions about what helps and what doesn't help, what they prefer in the application, etc.
+            - Category 1.5: "other": Any other information that directly relates to the organization, the opportunity available, the application and application process, eligibility, the projects they want to fund, the organization behind it, and any success stories / example applications / testimonials about the funding or organization, opinions about the opportunity of others, any nice to haves or things to include as part of the application, any projects they particularly favour, etc.
+
+5. Remember you must never, under any circumstances, exclude information you find. Every piece of information in the context the user provides you with should be categorized and present in the output. Make sure you also always have a name. You should have details for each of the categories above.
 6. You must output your response, once you've done this work, as a JSON object formatted in the following way:
-    { "opportunities": [{ "name", "organization", "details", "eligibility_project", "eligibility_person", "application_requirements", "other" }, ... for each of the opportunities in your list], "other": ["<a list of text strings each containing the bullet point that didn't fit into one or more opportunities and categories thereof directly>" ]}
+    { "opportunities": [{ "name", "organization", "details", "eligibility",  "application_requirements", "other" }, ... for each of the opportunities in your list]}
 """
 
 
 class Opportunity(BaseModel):
-    name: list[str]
+    name: str
     organization: list[str]
     details: list[str]
-    eligibility_project: list[str]
-    eligibility_person: list[str]
+    eligibility: list[str]
     application_requirements: list[str]
     other: list[str]
 
 
 class ExtractFunding(BaseModel):
     opportunities: list[Opportunity]
-    other: list[str]
+
+
+def process():
+    files = ['00', '01', '02', '03', '04', '10', '11', '12', '20',
+             '30', '40', '50', '51', '60', '70', '71', '80', '90', '100']
+    for f in files:
+        path = "sal/src/" + f + ".txt"
+        data = None
+        output_f = "sal/src/" + f + ".json"
+        with open(path, "r") as fs:
+            data = fs.read()
+        if data and len(data):
+            user_prompt = f"Analyze and decompose the document in the context below as per your instructions, producing your output in the exact JSON format specified.\n\n### Context ###\n{data}"
+            new_data = get_response_schema(
+                data_processing_prompt, user_prompt, ExtractFunding)
+            if new_data:
+                try:
+                    with open(output_f, "w") as f:
+                        f.write(json.dumps(new_data, ensure_ascii=True))
+                        print("-- Wrote to file")
+                        continue
+                except Exception as e:
+                    print(f"--{e} - continuing to next file")
+                    continue
+            else:
+                print(f"--Error getting response from GPT. Continuing to next file")
+                continue
 
 
 def process_raw_data():
@@ -95,32 +117,57 @@ def process_raw_data():
 
 
 def get_ops_list():
-    files = list_files("sal/etl_data/", "json")
+    files = ['00', '01', '02', '03', '04', '10', '11', '12', '20',
+             '30', '40', '50', '51', '60', '70', '71', '80', '90', '100']
     ops = []
-    for fs in files:
-        with open(fs) as f:
-            f_data = json.loads(json.load(f))
-            if "opportunities" in f_data and len(f_data.get("opportunities", [])):
-                for o in f_data["opportunities"]:
-                    clean_op = {}
-                    for k, v in o.items():
-                        vs = [i.strip() for i in v if i and len(i.strip())]
-                        if vs and len(vs):
-                            if k != "name":
-                                clean_op[k] = vs
-                            else:
-                                clean_op[k] = ", ".join(vs)
-                    if not len(list(clean_op.keys())):
-                        continue
-                    if "name" in clean_op:
-                        name = ", ".join(clean_op["name"])
-                        matches = [ops.index(o)
-                                   for o in ops if "name" in o and (name in o["name"] or o["name"] in name)]
-                        if len(matches):
-                            clean_op["name"] = name + "_" + len(matches) + 1
-                        ops.append(clean_op)
-
+    names = []
+    for f in files:
+        path = "sal/src/" + f + ".json"
+        data = None
+        with open(path) as fs:
+            data = json.loads(json.load(fs))
+        o = data["opportunities"][0]
+        clean_op = {}
+        clean_val = None
+        name = None
+        for k, v in o.items():
+            if not v and not len(v):
+                continue
+            if isinstance(v, list):
+                if any(isinstance(vs, list) for vs in v):
+                    clean_val = ", ".join(
+                        [", ".join(vs) for vs in v])
+                else:
+                    clean_val = ", ".join(v)
+            else:
+                clean_val = v
+            clean_op[k] = clean_val
+            if k.lower() == "name":
+                name = clean_val
+        if not name or (name and name in names):
+            continue
+        names.append(name)
+        ops.append(clean_op)
     return ops
+
+    # files = list_files("sal/etl_data/", "json")
+    # ops = []
+    # names = []
+    # for fs in files:
+    #     f_data = None
+    #     with open(fs) as f:
+    #         f_data = json.loads(json.load(f))
+    #     if "opportunities" in f_data and len(f_data.get("opportunities", [])):
+    #         for o in f_data["opportunities"]:
+    #             print(o)
+
+    #             if not len(list(clean_op.keys())):
+    #                 continue
+    #             if not name or (name and name in names):
+    #                 continue
+    #             names.append(name)
+    #             ops.append(clean_op)
+    # return ops
 
 
 class Question(BaseModel):
@@ -175,22 +222,28 @@ class ApplicationDetails(BaseModel):
 
 
 def build_opportunity_context(ops):
-    all_keys = [[k for k in o.keys()] for o in ops]
-    all_keys = list(set([x for xs in all_keys for x in xs]))
-    table_header = "| " + " | ".join(all_keys) + " | \n"
-    divider = "| " + " | ".join(["------" for k in all_keys]) + " | \n"
-    table = table_header + divider
+    ctx = '#### Funding Opportunities List ####\n\n'
+    count = 0
+    names = []
     for op in ops:
-        op_row = "| "
-        for k in all_keys:
-            if k in op and op.get(k, None):
-                val = ", ".join(op[k]) if isinstance(op[k], list) else op[k]
-                op_row += val + " | "
-            else:
-                op_row += " n/a | "
-        op_row += "\n"
-        table += op_row
-    return table
+        name = op['name']
+        if name in names:
+            continue
+        names.append(name)
+        count += 1
+        op_ctx = ""
+        org = ", ".join(op['organization']) if isinstance(
+            op['organization'], list) else op['organization']
+        op_ctx += f"Opportunity {count}: {name}\nBy organization(s) {org}\n"
+        for k, v in op.items():
+            if not k in ["name", "organization"]:
+                clean_k = k.replace("_", " ").title()
+                val = ", ".join(op[k]) if isinstance(
+                    op[k], list) else op[k]
+                op_ctx += f"- {clean_k}: {val}\n"
+        op_ctx += "\n"
+        ctx += op_ctx
+    return ctx
 
 
 def get_questions():
@@ -232,6 +285,7 @@ def get_all_qa_context():
 def gen_application_qs():
     qa = get_all_qa_context()
     ops = get_ops_list()
+    print(ops)
     app_details = []
     for op in ops:
         op_context = create_op_context(op)
